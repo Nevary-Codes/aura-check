@@ -25,7 +25,7 @@ stress_questions = ["Q1A", "Q6A", "Q8A", "Q11A", "Q12A", "Q14A", "Q18A", "Q22A",
 
 words = ["VCL1", "VCL2", "VCL3", "VCL4","VCL5", "VCL7", "VCL8", "VCL10", "VCL11", "VCL13", "VCL14", "VCL15", "VCL16"]
 
-def main(data):
+def main(data=data):
     data["extraversion"] = data["TIPI1"] - data["TIPI6"]
     data["agreeableness"] = data["TIPI7"] - data["TIPI2"]
     data["conscientiousness"] = data["TIPI3"] - data["TIPI8"]
@@ -46,7 +46,7 @@ def main(data):
     input_encoded.to_csv("csv.csv")
 
 
-def predict_depression(data):
+def predict_depression(data=data):
     main(data)
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
@@ -59,7 +59,7 @@ def predict_depression(data):
     preds = model.predict(data)
     print(preds)
 
-def predict_anxiety(data):
+def predict_anxiety(data=data):
     main(data)
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
@@ -72,7 +72,7 @@ def predict_anxiety(data):
     preds = model.predict(data)
     print(preds)
 
-def predict_stress(data):
+def predict_stress(data=data):
     main(data)
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
