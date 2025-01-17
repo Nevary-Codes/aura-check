@@ -1,7 +1,11 @@
 import pandas as pd
 import pickle
 
-data = pd.read_csv("/Users/aryanmanchanda/Projects/aura-check/Scripts/sample.csv", delimiter="\t")
+import requests
+import pandas as pd
+from io import BytesIO
+
+
 
 def score(colname: str, data: pd.DataFrame) -> pd.DataFrame:
     for index, i in enumerate(data[colname]):
@@ -25,7 +29,19 @@ stress_questions = ["Q1A", "Q6A", "Q8A", "Q11A", "Q12A", "Q14A", "Q18A", "Q22A",
 
 words = ["VCL1", "VCL2", "VCL3", "VCL4","VCL5", "VCL7", "VCL8", "VCL10", "VCL11", "VCL13", "VCL14", "VCL15", "VCL16"]
 
-def main(data=data):
+def main():
+    onedrive_url = "https://bennettu-my.sharepoint.com/personal/e23cseu0615_bennett_edu_in/_layouts/15/download.aspx?share=EQLLM6GDZKVHli4aSWFVGccB587D3Qpr40bJZlQA9NoxGA"
+
+    response = requests.get(onedrive_url)
+
+    if response.status_code == 200:
+        data = pd.read_excel(BytesIO(response.content))
+    else:
+        print(f"❌ Error: {response.status_code}")
+
+
+
+        
     data["extraversion"] = data["TIPI1"] - data["TIPI6"]
     data["agreeableness"] = data["TIPI7"] - data["TIPI2"]
     data["conscientiousness"] = data["TIPI3"] - data["TIPI8"]
@@ -46,8 +62,8 @@ def main(data=data):
     input_encoded.to_csv("csv.csv")
 
 
-def predict_depression(data=data):
-    main(data)
+def predict_depression():
+    main()
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
     for i in data.columns:
@@ -59,7 +75,7 @@ def predict_depression(data=data):
     preds = model.predict(data)
     print(preds)
 
-def predict_anxiety(data=data):
+def predict_anxiety():
     main(data)
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
@@ -72,7 +88,7 @@ def predict_anxiety(data=data):
     preds = model.predict(data)
     print(preds)
 
-def predict_stress(data=data):
+def predict_stress():
     main(data)
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
@@ -86,6 +102,6 @@ def predict_stress(data=data):
     print(preds)
 
 
-predict_anxiety(data)
-predict_depression(data)
-predict_stress(data)
+predict_anxiety()
+predict_depression()
+predict_stress()

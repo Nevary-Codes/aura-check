@@ -2046,3 +2046,8 @@ header .circle {
 }
 
 /* End Responsive */
+
+#but {
+  border: none;
+  background-color: rgb(246, 247, 251);
+}

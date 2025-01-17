@@ -252,3 +252,35 @@ body {
     display: none;
   }
 }
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+.quiz-container {
+  display: none;
+  margin-top: 20px;
+}
+.result-container {
+  display: none;
+  margin-top: 20px;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 32px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+button:hover {
+  background-color: #45a049;
+}
+.question {
+  margin: 10px 0;
+}
+.options {
+  margin: 10px 0;
+}

@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+select, button {
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+.techniques-container {
+    margin-top: 20px;
+}
+.technique {
+    background-color: #d1e7dd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}

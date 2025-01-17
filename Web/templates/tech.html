@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/tech-css.css">
+    <title>Stress Level Selector</title>
+</head>
+<body>
+    <h1>Stress Level Selector</h1>
+    <p>Select your current stress level:</p>
+
+    <select id="stressLevel">
+        <option value="0">Select a level...</option>
+        <option value="1">Level 1: Mild Stress</option>
+        <option value="2">Level 2: Moderate Stress</option>
+        <option value="3">Level 3: High Stress</option>
+    </select>
+
+    <button onclick="showTechniques()">Show Techniques</button>
+
+    <div id="techniques" class="techniques-container"></div>
+
+    <script src="static/js/tech.js"></script>
+</body>
+</html>
