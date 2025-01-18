@@ -39,8 +39,32 @@ def main():
     else:
         print(f"❌ Error: {response.status_code}")
 
+    qa = []
+    for i in data.columns:
+        if i.startswith("Q") and i.endswith("A"):
+            qa.append(i)
 
+    for i in qa:
+        data[i] = int(data[i][0][-1])
 
+    reversed_dict = {
+        "Disagree strongly": 1,
+        "Disagree moderately": 2,
+        "Disagree a little": 3,
+        "Neither agree nor disagree": 4,
+        "Agree a little": 5,
+        "Agree moderately": 6,
+        "Agree strongly": 7
+    }
+
+    ls = []
+
+    for i in data.columns:
+        if i[:3] == "TIP":
+            ls.append(i)
+
+    for i in ls:
+        data[i] = reversed_dict[data[i][0]]
         
     data["extraversion"] = data["TIPI1"] - data["TIPI6"]
     data["agreeableness"] = data["TIPI7"] - data["TIPI2"]
@@ -76,7 +100,7 @@ def predict_depression():
     print(preds)
 
 def predict_anxiety():
-    main(data)
+    main()
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
     for i in data.columns:
@@ -89,7 +113,7 @@ def predict_anxiety():
     print(preds)
 
 def predict_stress():
-    main(data)
+    main()
     data = pd.read_csv("csv.csv", index_col=0)
     dropped_questions = ["anxiety_score", "stress_score", "depression_score"]
     for i in data.columns:
@@ -99,7 +123,7 @@ def predict_stress():
     data = data.drop(dropped_questions, axis=1)
     model = pickle.load(open("/Users/aryanmanchanda/Projects/aura-check/models/xgc_model1_stress.pkl", "rb"))
     preds = model.predict(data)
-    print(preds)
+    return preds[-1]
 
 
 predict_anxiety()

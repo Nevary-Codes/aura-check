@@ -7,7 +7,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index-main.html')
-
     
 @app.route('/pred')
 def preds():
@@ -15,11 +14,30 @@ def preds():
 
 @app.route('/quiz')
 def quiz():
-    return render_template("quiz.html")
+    result = request.args.get('result', None)
+    return render_template("quiz.html", result=result)
 
 @app.route('/tech')
 def tech():
     return render_template("tech.html")
+
+@app.route('/schedule')
+def schedule():
+    return render_template("schedule.html")
+
+@app.route("/predict")
+def predict():
+    api_url = "http://127.0.0.1:5500/getStressPredictionOutput"
+
+    try:
+        response = requests.get(api_url)
+        result = response.json()["prediction_file"]
+        if response.status_code == 200:
+            return redirect(url_for('quiz', result=result))
+        else:
+            return f"Error: {response.status_code}", response.status_code
+    except requests.RequestException as e:
+        return f"Request failed: {e}", 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=6000)

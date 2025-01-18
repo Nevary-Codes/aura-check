@@ -24,7 +24,7 @@ class Test(Resource):
 class GetDepressionPredictionOutput(Resource):
     def get(self):
         try:
-            pred = script.predict_depression()
+            pred = int(script.predict_depression())
             return {'prediction_file': pred}
         
         except Exception as error:
@@ -50,9 +50,8 @@ class GetAnxietyPredictionOutput(Resource):
 class GetStressPredictionOutput(Resource):
     def get(self):
         try:
-            pred = script.predict_stress()
+            pred = int(script.predict_stress())  # ✅ Convert int64 to int
             return {'prediction_file': pred}
-        
         except Exception as error:
             return {"error": str(error)}, 500
 
