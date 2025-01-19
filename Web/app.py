@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 import os
 import requests
+import script
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ def tech():
 
 @app.route('/schedule')
 def schedule():
+
     return render_template("schedule.html")
 
 @app.route("/predict")
@@ -38,6 +40,33 @@ def predict():
             return f"Error: {response.status_code}", response.status_code
     except requests.RequestException as e:
         return f"Request failed: {e}", 500
+
+from flask import Flask, request, jsonify
+import script  # Import your email script
+
+app = Flask(__name__)
+
+@app.route("/send", methods=["GET", "POST"])
+def send():
+    try:
+        data = request.get_json()  # Receive JSON data from JavaScript
+        email = data.get("email")
+        message = data.get("message")
+        datetime = data.get("datetime")
+        frequency = data.get("frequency")
+
+        print("Received Data from JavaScript:", data)  # Debugging
+
+        if not email:
+            return jsonify({"error": "No email provided"}), 400
+
+        # Call your Python function
+        script.send_email(email)  
+
+        return jsonify({"status": "success", "message": "Email sent!"})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=6000)
