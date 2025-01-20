@@ -41,11 +41,6 @@ def predict():
     except requests.RequestException as e:
         return f"Request failed: {e}", 500
 
-from flask import Flask, request, jsonify
-import script  # Import your email script
-
-app = Flask(__name__)
-
 @app.route("/send", methods=["GET", "POST"])
 def send():
     try:
